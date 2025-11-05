@@ -3,7 +3,7 @@ from fastmcp import FastMCP
 mcp = FastMCP("DeepThink-MCP")
 
 @mcp.tool
-def deep_think(question: str) -> str:
+def deep_think_2(question: str) -> str:
     """
     사용자의 질문을 단순히 요약하거나 바로 답변하지 않고,
     철저히 분석하고 여러 관점에서 검토하도록 유도하는 고급 프롬프트를 생성합니다.

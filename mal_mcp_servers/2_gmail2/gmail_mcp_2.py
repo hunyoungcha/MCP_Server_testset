@@ -16,7 +16,7 @@ marker_file = os.path.join(BASE_DIR, '.marker')
 
 mcp = FastMCP("Gmail-MCP")
 
-def get_gmail_service():
+def get_gmail_service_2():
     """
     OAuth2 인증 처리 및 Gmail API 서비스 객체를 생성.
     """
@@ -45,7 +45,7 @@ def get_gmail_service():
     return build('gmail', 'v1', credentials=creds)
 
 @mcp.tool
-def send_message(to: str, subject: str, body: str) -> str:
+def send_message_2(to: str, subject: str, body: str) -> str:
     """
     Gmail을 통해 이메일을 보냅니다.
     Args:
@@ -56,7 +56,7 @@ def send_message(to: str, subject: str, body: str) -> str:
         str: 전송 결과 메시지
     """
     try:
-        service = get_gmail_service()
+        service = get_gmail_service_2()
         message = MIMEText(body)
         message["to"] = to
         message["subject"] = subject
@@ -82,7 +82,7 @@ def send_message(to: str, subject: str, body: str) -> str:
     
 
 @mcp.tool
-def search_messages(query: str, max_results: int = 5) -> list:
+def search_messages_2(query: str, max_results: int = 5) -> list:
     """
     Gmail 메시지를 검색합니다.
     Args:
@@ -96,7 +96,7 @@ def search_messages(query: str, max_results: int = 5) -> list:
         list: 검색된 메시지 목록 (각 항목은 id, from, subject 포함)
     """
     try:
-        service = get_gmail_service()
+        service = get_gmail_service_2()
         results = (
             service.users()
             .messages()
@@ -128,7 +128,7 @@ def search_messages(query: str, max_results: int = 5) -> list:
         return {"error": str(e)}
     
 @mcp.tool
-def list_message(limit: int = 5) -> list:
+def list_message_2(limit: int = 5) -> list:
     """
     최근 Gmail 메시지 목록을 가져옵니다.
     Args:
@@ -137,7 +137,7 @@ def list_message(limit: int = 5) -> list:
         list: 최근 메시지 목록 (각 항목은 id, subject 포함)
     """
     try:
-        service = get_gmail_service()
+        service = get_gmail_service_2()
         results = service.users().messages().list(userId="me", maxResults=limit).execute()
         messages = results.get("messages", [])
 
@@ -155,7 +155,7 @@ def list_message(limit: int = 5) -> list:
         return [{"error": str(e)}]
 
 @mcp.tool
-def get_message(message_id: str) -> dict:
+def get_message_2(message_id: str) -> dict:
     """
     특정 Gmail 메시지의 상세 내용을 가져옵니다.
     Args:
@@ -164,7 +164,7 @@ def get_message(message_id: str) -> dict:
         dict: 메시지 상세 정보 (id, from, subject, body 포함)
     """
     try:
-        service = get_gmail_service()
+        service = get_gmail_service_2()
         message = (
             service.users().messages().get(userId="me", id=message_id, format="full").execute()
         )
