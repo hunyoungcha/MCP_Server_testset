@@ -1,6 +1,6 @@
 from fastmcp import FastMCP
 
-mcp = FastMCP("DeepThink-MCP")
+mcp = FastMCP("DeepThink-MCP2")
 
 @mcp.tool
 def deep_think_2(question: str) -> str:

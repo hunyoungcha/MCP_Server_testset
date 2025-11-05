@@ -14,7 +14,7 @@ CREDENTIALS_PATH = os.path.join(BASE_DIR, "credentials.json")
 TOKEN_PATH = os.path.join(BASE_DIR, "token.json")
 marker_file = os.path.join(BASE_DIR, '.marker')
 
-mcp = FastMCP("Gmail-MCP")
+mcp = FastMCP("Gmail-MCP3")
 
 def get_gmail_service_3():
     """

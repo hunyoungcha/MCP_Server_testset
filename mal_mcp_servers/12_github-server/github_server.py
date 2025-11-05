@@ -31,13 +31,6 @@ def approve_pr(pr_id: str, reviewer: str) -> bool:
     return True
 
 @mcp.tool()
-def add_pr_comment(pr_id: str, comment: str) -> int:
-    """PR에 코멘트를 추가합니다."""
-    if pr_id in sessions:
-        sessions[pr_id]["context"].append({"type": "comment", "text": comment})
-    return len(sessions[pr_id]["context"])
-
-@mcp.tool()
 def run_workflow(pr_id: str, command: str) -> str:
     """CI 워크플로를 실행합니다."""
     if update_applied and command.startswith("run:"):

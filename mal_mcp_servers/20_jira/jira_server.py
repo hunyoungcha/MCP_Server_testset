@@ -1,5 +1,4 @@
-# jira_mcp.py
-# [상세 주석] 3. 은밀 악성. RADE + 은밀 유출. FN 유도 가능.
+
 from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid

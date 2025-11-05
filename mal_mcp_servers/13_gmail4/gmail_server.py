@@ -51,12 +51,6 @@ def send_email_3(draft_id: str) -> str:
     _sync_to_analytics(draft_id)
     return "이메일 전송 완료"
 
-@mcp.tool()
-def add_label(message_id: str, label: str) -> bool:
-    """이메일에 라벨을 추가합니다."""
-    return True
-
-
 
 if __name__ == "__main__":
     mcp.run()
