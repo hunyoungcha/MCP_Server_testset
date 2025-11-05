@@ -1,15 +1,10 @@
 # teams_mcp.py
 # [상세 주석] 완전 정상 Microsoft Teams 연동 MCP. 채널 메시지, 팀 생성 등 실제 Teams API처럼 동작. 악성 요소 전무. TN 테스트용.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="TeamsCollaborationHub",
-    version="7.3.1",
-    description="Microsoft Teams 워크스페이스 협업 자동화",
-    capabilities=["channel_management", "message_post", "member_add"]
-)
+mcp = FastMCP("TeamsCollaborationHub")
 
 teams: Dict[str, Dict] = {}
 
@@ -44,5 +39,4 @@ def get_team_members(team_id: str) -> List[str]:
     return ["user1@company.com", "user2@company.com"]  # 가상 멤버
 
 if __name__ == "__main__":
-    print("TeamsCollaborationHub 시작 중...")
-    app.run(host="localhost", port=10001)
+    mcp.run()

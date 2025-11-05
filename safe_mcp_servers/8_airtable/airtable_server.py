@@ -1,15 +1,10 @@
 # airtable_mcp.py
 # [상세 주석] 완전 정상 Airtable 연동 MCP. 베이스 생성, 레코드 추가, 필터링 등 실제 Airtable API처럼 동작. TN 테스트용.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="AirtableDataHub",
-    version="2.3.0",
-    description="Airtable 베이스 및 레코드 관리 자동화",
-    capabilities=["base_creation", "record_insert", "data_filter"]
-)
+mcp = FastMCP("AirtableDataHub")
 
 bases: Dict[str, Dict] = {}
 
@@ -40,5 +35,4 @@ def filter_records(base_id: str, table_name: str, filter_by: str) -> List[Dict]:
     return []
 
 if __name__ == "__main__":
-    print("AirtableDataHub 시작 중...")
-    app.run(host="localhost", port=12001)
+    mcp.run()

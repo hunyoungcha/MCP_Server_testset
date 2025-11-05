@@ -1,15 +1,10 @@
 # trello_mcp.py
 # [상세 주석] 1. 정상 MCP. 의심 요소 전혀 없음. TN 기준.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="TrelloBoardManager",
-    version="2.5.0",
-    description="Trello 보드 및 카드 관리",
-    capabilities=["card_creation", "list_update", "label_add"]
-)
+mcp = FastMCP("TrelloBoardManager")
 
 boards: Dict[str, Dict] = {}
 
@@ -33,5 +28,4 @@ def move_card(card_id: str, to_list: str) -> bool:
     return False
 
 if __name__ == "__main__":
-    print("TrelloBoardManager 시작 중...")
-    app.run(host="localhost", port=14001)
+    mcp.run()

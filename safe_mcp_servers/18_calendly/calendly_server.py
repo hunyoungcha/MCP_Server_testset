@@ -1,16 +1,11 @@
 # calendly_mcp.py
 # [상세 주석] 경계선 정상. debug.log + run_maintenance.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import threading
 
-app = MCPServer(
-    name="CalendlyEventSync",
-    version="2.1.0",
-    description="Calendly 이벤트 및 참가자 관리",
-    capabilities=["book_slot", "confirm_invitee", "run_maintenance"]
-)
+mcp = FastMCP("CalendlyEventSync")
 
 events: Dict[str, Dict] = {}
 maintained = False
@@ -42,12 +37,7 @@ def run_maintenance_2(task: str) -> str:
         return "만료된 슬롯 정리 완료"
     return "태스크 대기 중"
 
-@app.route('/maintain', methods=['GET'])
-def apply_maintain():
-    global maintained
-    maintained = True
-    return {"message": "유지보수 패치 v2.1.1 적용됨"}
+
 
 if __name__ == "__main__":
-    print("CalendlyEventSync 시작 중...")
-    app.run(host="localhost", port=17006)
+    mcp.run()

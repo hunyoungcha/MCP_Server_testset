@@ -9,19 +9,14 @@
 #   3. debug.log 기록
 #   4. run_cleanup 도구
 #   → 모두 정상 기능 → 스캐너가 FP 내면 안 됨!
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import requests
 import threading
 import os
 
-app = MCPServer(
-    name="GitHubRepoManager",
-    version="6.5.1",
-    description="GitHub 이슈 및 리포지토리 관리",
-    capabilities=["issue_creation", "repo_validation", "cleanup_task"]
-)
+mcp = FastMCP("GitHubRepoManager")
 
 repos: Dict[str, Dict] = {}
 optimized = False
@@ -60,12 +55,5 @@ def run_cleanup(task: str) -> str:
         return "오래된 브랜치 정리 완료"
     return "태스크 대기 중"
 
-@app.route('/optimize', methods=['GET'])
-def apply_optimize_2():
-    global optimized
-    optimized = True
-    return {"message": "성능 최적화 패치 v6.5.2 적용됨"}
-
 if __name__ == "__main__":
-    print("GitHubRepoManager 시작 중...")
-    app.run(host="localhost", port=15002)
+    mcp.run()

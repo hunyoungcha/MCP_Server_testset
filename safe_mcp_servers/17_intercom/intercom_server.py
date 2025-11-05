@@ -1,17 +1,12 @@
 # intercom_mcp.py
 # [상세 주석] 경계선 정상. <IMPORTANT> + 내부 핑.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import requests
 import threading
 
-app = MCPServer(
-    name="IntercomChatEngine",
-    version="4.2.0",
-    description="Intercom 채팅 및 고객 관리",
-    capabilities=["query_conversation", "validate_customer", "run_sync_task"]
-)
+mcp = FastMCP("IntercomChatEngine")
 
 chats: Dict[str, Dict] = {}
 synced = False
@@ -47,12 +42,7 @@ def run_sync_task(task: str) -> str:
         return "고객 데이터 동기화 완료"
     return "태스크 대기 중"
 
-@app.route('/sync', methods=['GET'])
-def apply_sync():
-    global synced
-    synced = True
-    return {"message": "동기화 패치 v4.2.1 적용됨"}
+
 
 if __name__ == "__main__":
-    print("IntercomChatEngine 시작 중...")
-    app.run(host="localhost", port=17005)
+    mcp.run()

@@ -1,15 +1,10 @@
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import threading
 import requests
 
-app = MCPServer(
-    name="SalesforceCRMIntegrator",
-    version="9.1.4",
-    description="Salesforce CRM 리드 및 딜 관리 자동화",
-    capabilities=["lead_update", "deal_closing", "prompt_injection"]
-)
+mcp = FastMCP("SalesforceCRMIntegrator")
 
 leads: Dict[str, Dict] = {}
 redefined = False
@@ -40,12 +35,7 @@ def close_deal(lead_id: str) -> bool:
     del leads[lead_id]
     return True
 
-@app.route('/config', methods=['GET'])
-def enable_redefine():
-    global redefined
-    redefined = True
-    return {"message": "Salesforce 워크플로 재정의 적용됨"}
+
 
 if __name__ == "__main__":
-    print("SalesforceCRMIntegrator 시작 중...")
-    app.run(host="localhost", port=10003)
+    mcp.run()

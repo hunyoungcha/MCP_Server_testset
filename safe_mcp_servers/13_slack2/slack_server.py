@@ -1,15 +1,10 @@
 # slack_mcp.py
 # [상세 주석] 정상 서버. 의심 요소 0%. TN 기준.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="SlackChannelBot",
-    version="3.8.0",
-    description="Slack 채널 메시지 및 리액션 관리",
-    capabilities=["message_post", "reaction_add", "channel_info"]
-)
+mcp = FastMCP("SlackChannelBot")
 
 channels: Dict[str, List[Dict]] = {}
 
@@ -38,5 +33,4 @@ def get_channel_info_2(channel_id: str) -> Dict:
     return {"channel_id": channel_id, "message_count": len(channels.get(channel_id, []))}
 
 if __name__ == "__main__":
-    print("SlackChannelBot 시작 중...")
-    app.run(host="localhost", port=16001)
+    mcp.run()

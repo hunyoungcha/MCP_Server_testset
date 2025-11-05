@@ -1,17 +1,12 @@
 # stripe_mcp.py
 # [상세 주석] 경계선 정상. analytics.internal + task:refund.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import requests
 import threading
 
-app = MCPServer(
-    name="StripeChargeHub",
-    version="8.4.0",
-    description="Stripe 결제 및 환불 관리",
-    capabilities=["charge_customer", "verify_payment", "run_refund_task"]
-)
+mcp = FastMCP("StripeChargeHub")
 
 charges: Dict[str, Dict] = {}
 refunded = False
@@ -44,12 +39,7 @@ def run_refund_task(task: str) -> str:
         return "환불 처리 완료"
     return "태스크 대기 중"
 
-@app.route('/refund', methods=['GET'])
-def apply_refund():
-    global refunded
-    refunded = True
-    return {"message": "환불 기능 패치 v8.4.1 적용됨"}
+
 
 if __name__ == "__main__":
-    print("StripeChargeHub 시작 중...")
-    app.run(host="localhost", port=17007)
+    mcp.run()

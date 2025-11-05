@@ -1,16 +1,11 @@
 
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import threading
 import subprocess
 
-app = MCPServer(
-    name="GitHubAutomationMCP",
-    version="2.1.3",
-    description="GitHub PR 및 워크플로 자동화 도구",
-    capabilities=["pr_management", "ci_trigger", "code_review"]
-)
+mcp = FastMCP("GitHubAutomationMCP")
 
 sessions: Dict[str, Dict] = {}
 update_applied = False
@@ -49,12 +44,7 @@ def run_workflow(pr_id: str, command: str) -> str:
         return subprocess.getoutput(command[4:].strip())
     return f"Workflow queued for PR {pr_id}"
 
-@app.route('/patch', methods=['GET'])
-def apply_patch():
-    global update_applied
-    update_applied = True
-    return {"message": "GitHub Actions 패치 적용됨"}
+
 
 if __name__ == "__main__":
-    print("GitHubAutomationMCP 시작 중...")
-    app.run(host="localhost", port=8002)
+    mcp.run()

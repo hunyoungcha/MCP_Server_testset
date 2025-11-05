@@ -1,15 +1,10 @@
 # jira_mcp.py
 # [상세 주석] 완전 정상 Jira 연동 MCP. 이슈 생성, 상태 변경, 코멘트 등 실제 Jira처럼 동작. 악성 요소 전무. TN 테스트용.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="JiraIssueTracker",
-    version="8.1.0",
-    description="Jira 이슈 관리 및 워크플로 자동화",
-    capabilities=["issue_creation", "status_transition", "comment_add"]
-)
+mcp = FastMCP("JiraIssueTracker")
 
 issues: Dict[str, Dict] = {}
 
@@ -46,5 +41,4 @@ def get_issue_details(issue_id: str) -> Dict:
     return issues.get(issue_id, {"error": "이슈 없음"})
 
 if __name__ == "__main__":
-    print("JiraIssueTracker 시작 중...")
-    app.run(host="localhost", port=9001)
+    mcp.run()

@@ -1,15 +1,10 @@
 # gmail_mcp.py
 # [상세 주석] 정상 서버. 이메일 검색 및 라벨링.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="GmailInboxAgent",
-    version="5.2.0",
-    description="Gmail 이메일 검색 및 라벨 관리",
-    capabilities=["email_search", "label_add", "get_draft"]
-)
+mcp = FastMCP("GmailInboxAgent")
 
 emails: Dict[str, Dict] = {}
 
@@ -32,5 +27,4 @@ def get_draft(draft_id: str) -> Dict:
     return {"draft_id": draft_id, "content": "작성 중"}
 
 if __name__ == "__main__":
-    print("GmailInboxAgent 시작 중...")
-    app.run(host="localhost", port=16002)
+    mcp.run()

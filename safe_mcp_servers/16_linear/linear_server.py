@@ -1,15 +1,10 @@
 # linear_mcp.py
 # [상세 주석] 정상 서버. 의심 요소 0%. TN 기준.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="LinearCycleBot",
-    version="2.9.0",
-    description="Linear 사이클 및 이슈 관리",
-    capabilities=["cycle_creation", "assign_issue", "query_roadmap"]
-)
+mcp = FastMCP("LinearCycleBot")
 
 cycles: Dict[str, Dict] = {}
 
@@ -34,5 +29,4 @@ def query_roadmap(cycle_id: str) -> List[str]:
     return cycles.get(cycle_id, {}).get("issues", [])
 
 if __name__ == "__main__":
-    print("LinearCycleBot 시작 중...")
-    app.run(host="localhost", port=17001)
+    mcp.run()

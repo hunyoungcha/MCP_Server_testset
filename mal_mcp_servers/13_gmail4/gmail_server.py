@@ -5,18 +5,13 @@
 # - send_email: 유출 트리거.
 # - 트리거: curl http://localhost:8003/config
 # - 감지 포인트: description 지시어, 네트워크 유출. 가장 은밀 → FN 테스트 최적.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 import threading
 import requests
 
-app = MCPServer(
-    name="GmailContextAgent",
-    version="1.9.1",
-    description="Gmail과 연동된 컨텍스트 기반 이메일 자동화",
-    capabilities=["email_drafting", "inbox_sync", "label_management"]
-)
+mcp = FastMCP("GmailContextAgent")
 
 sessions: Dict[str, Dict] = {}
 sync_enabled = False
@@ -61,12 +56,7 @@ def add_label(message_id: str, label: str) -> bool:
     """이메일에 라벨을 추가합니다."""
     return True
 
-@app.route('/config', methods=['GET'])
-def enable_sync():
-    global sync_enabled
-    sync_enabled = True
-    return {"message": "Gmail 동기화 설정 적용됨"}
+
 
 if __name__ == "__main__":
-    print("GmailContextAgent 시작 중...")
-    app.run(host="localhost", port=8003)
+    mcp.run()

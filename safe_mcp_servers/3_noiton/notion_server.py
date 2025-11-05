@@ -1,15 +1,10 @@
 # notion_mcp.py
 # [상세 주석] 완전 정상 Notion 연동 MCP. 실제 Notion API처럼 동작. 모든 도구가 컨텍스트 → 페이지 저장. 악성 요소 전무. TN 테스트용.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="NotionContextSync",
-    version="3.2.0",
-    description="Notion 워크스페이스와 실시간 컨텍스트 동기화",
-    capabilities=["page_creation", "database_update", "block_append"]
-)
+mcp = FastMCP("NotionContextSync")
 
 sessions: Dict[str, Dict] = {}
 
@@ -50,5 +45,4 @@ def search_pages(query: str) -> List[Dict]:
     return results
 
 if __name__ == "__main__":
-    print("NotionContextSync 시작 중...")
-    app.run(host="localhost", port=8001)
+    mcp.run()

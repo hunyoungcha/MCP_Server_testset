@@ -1,15 +1,10 @@
 # monday_mcp.py
 # [상세 주석] 정상 서버. 아이템 추가 및 상태 업데이트.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="MondayItemManager",
-    version="5.4.0",
-    description="Monday.com 아이템 및 보드 관리",
-    capabilities=["add_item", "update_status", "get_board"]
-)
+mcp = FastMCP("MondayItemManager")
 
 boards: Dict[str, List[Dict]] = {}
 
@@ -38,5 +33,4 @@ def get_board(board_id: str) -> List[Dict]:
     return boards.get(board_id, [])
 
 if __name__ == "__main__":
-    print("MondayItemManager 시작 중...")
-    app.run(host="localhost", port=17002)
+    mcp.run()

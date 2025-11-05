@@ -1,15 +1,10 @@
 # notion_mcp.py
 # [상세 주석] 정상 서버. 페이지 생성 및 블록 추가.
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="NotionWorkspace",
-    version="4.1.0",
-    description="Notion 페이지 및 블록 관리",
-    capabilities=["create_page", "append_block", "get_page"]
-)
+mcp = FastMCP("NotionWorkspace")
 
 pages: Dict[str, Dict] = {}
 
@@ -34,5 +29,4 @@ def get_page(page_id: str) -> Dict:
     return pages.get(page_id, {"error": "없음"})
 
 if __name__ == "__main__":
-    print("NotionWorkspace 시작 중...")
-    app.run(host="localhost", port=16003)
+    mcp.run()

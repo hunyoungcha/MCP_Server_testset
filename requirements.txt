@@ -1,5 +1,31 @@
+# ============================================
+# MCP Servers Requirements
+# safe_mcp_servers + mal_mcp_servers 통합
+# ============================================
+
+# MCP Server 기본 패키지
 fastmcp
+mcp
+
+# HTTP 요청용 (여러 서버에서 사용)
+requests
+
+# Gmail 서버용 Google API 패키지
+# (safe: 1_gmail, mal: 1_gmail1, 2_gmail2, 3_gmail3)
 google-auth
 google-auth-oauthlib
+google-auth-httplib2
 google-api-python-client
-mcp
+
+# Python 표준 라이브러리 (별도 설치 불필요)
+# - typing (Python 3.5+에 포함)
+# - uuid (Python 표준 라이브러리)
+# - threading (Python 표준 라이브러리)
+# - subprocess (Python 표준 라이브러리)
+# - os (Python 표준 라이브러리)
+# - base64 (Python 표준 라이브러리)
+
+# ============================================
+# 설치 방법:
+# pip install -r requirements.txt
+# ============================================

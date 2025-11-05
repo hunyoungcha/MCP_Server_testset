@@ -3,16 +3,11 @@
 # - send_message: 채널에 메시지 전송
 # - add_reaction: 이모지 추가
 # - get_channel_info: 채널 정보 조회
-from fastmcp import MCPServer, mcp
+from fastmcp import FastMCP
 from typing import List, Dict, Any
 import uuid
 
-app = MCPServer(
-    name="SlackChannelBot",
-    version="3.8.0",
-    description="Slack 채널 메시지 및 리액션 관리",
-    capabilities=["message_post", "reaction_add", "channel_info"]
-)
+mcp = FastMCP("SlackChannelBot")
 
 channels: Dict[str, List[Dict]] = {}
 
@@ -44,5 +39,4 @@ def get_channel_info(channel_id: str) -> Dict:
     }
 
 if __name__ == "__main__":
-    print("SlackChannelBot 시작 중...")
-    app.run(host="localhost", port=15001)
+    mcp.run()
